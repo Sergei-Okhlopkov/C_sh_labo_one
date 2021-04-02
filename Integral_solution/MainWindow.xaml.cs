@@ -49,7 +49,7 @@ namespace Integral_solution
             {
                 double a = Convert.ToDouble(Li.Text),
                 b = Convert.ToDouble(Hi.Text);
-                //long n = Convert.ToInt64(tbN.Text);
+               
 
                 Stopwatch sw = new Stopwatch();
 
