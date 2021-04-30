@@ -13,41 +13,55 @@
     <Grid Margin="5" UseLayoutRounding="False">
         <Grid.ColumnDefinitions>
             <!--<ColumnDefinition Width="20"></ColumnDefinition>-->
-            <ColumnDefinition Width="auto"></ColumnDefinition>
-            <ColumnDefinition Width="auto"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="120"></ColumnDefinition>
+            <ColumnDefinition Width="120"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
             <!--<ColumnDefinition Width="20"></ColumnDefinition>-->
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <!--<RowDefinition Height="20"></RowDefinition>-->
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition ></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0">Lower index</TextBlock>
         <TextBlock Grid.Row="1" Grid.Column="0">Upper index</TextBlock>
         <TextBlock Grid.Row="2" Grid.Column="0">N, count</TextBlock>
-        <TextBlock Grid.Row="5" Grid.Column="0" FontWeight="Bold" Foreground="BlueViolet" FontSize="20">Result</TextBlock>
+        <TextBlock Grid.Row="6" Grid.Column="0" FontWeight="Bold" Foreground="BlueViolet" FontSize="20">Result</TextBlock>
+        <TextBlock Grid.Row="8" Grid.Column="0" FontWeight="Bold" Foreground="DarkOrange" FontSize="14" TextWrapping="Wrap">Sequential time</TextBlock>
+        <TextBlock Grid.Row="9" Grid.Column="0" FontWeight="Bold" Foreground="DarkOrange" FontSize="14" TextWrapping="Wrap">Parallel time</TextBlock>
         <TextBox x:Name="Li" Grid.Row="0" Grid.Column="1" Margin="5 0 0 5 " Text="1" ></TextBox>
         <TextBox x:Name="Hi" Grid.Row="1" Grid.Column="1" Margin="5 0 0 5 " Text="1000000"></TextBox>
         <TextBox x:Name="tbN" Grid.Row="2" Grid.Column="1" Margin="5 0 0 5 " Text="100000" ></TextBox>
-        <Button x:Name="GetResult"  Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Click="GetResult_Click">Рассчитать</Button>
+        <Button x:Name="GetResult"  Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" Click="GetResult_Click">Рассчитать</Button>
         <Button x:Name="btnClearGraphic" Grid.Row="7" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Click="btnClearGraphic_Click">Очистить график</Button>
-        <TextBox x:Name="tbResult" Grid.Row="5" Grid.Column="1" Margin="5 5 0 5 " Foreground="#FFEE0E0E"  FontWeight="Bold"/>
+        <TextBox x:Name="tbResult" Grid.Row="6" Grid.Column="1" Margin="-30 5 0 5 " Foreground="#FFEE0E0E"  FontWeight="Bold"/>
+        <TextBox x:Name="tbSequentialTime" Grid.Row="8" Grid.Column="1"  Foreground="#FFEE0E0E"  FontWeight="Bold"/>
+        <TextBox x:Name="tbParallelTime" Grid.Row="9" Grid.Column="1"  Foreground="#FFEE0E0E"  FontWeight="Bold"/>
 
-        <oxy:Plot Title="{Binding Title}" x:Name="MyPlot"   Grid.Row="0"  Grid.RowSpan="7" Height="350" Grid.Column="2" >
+        <oxy:Plot Title="{Binding Title}" x:Name="MyPlot"   Grid.Row="0"  Grid.RowSpan="8" Height="350" Grid.Column="2" >
             <oxy:Plot.Series>
                 <oxy:LineSeries  ItemsSource="{Binding Points}"/>
             </oxy:Plot.Series>
         </oxy:Plot>
 
-        <ComboBox x:Name="cmbChooseMethod" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Margin="5 0 0 5">
+        <ComboBox x:Name="cmbChooseMethod" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Margin="5 0 0 5">
             <ComboBoxItem IsSelected="True">Метод прямоугольников</ComboBoxItem>
             <ComboBoxItem>Метод трапеций</ComboBoxItem>
+            <ComboBoxItem>Метод Ньютона (парабол)</ComboBoxItem>
+        </ComboBox>
+
+        <ComboBox x:Name="cmbChooseWay" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Margin="5 0 0 5">
+            <ComboBoxItem IsSelected="True">Последовательно</ComboBoxItem>
+            <ComboBoxItem>Параллельно</ComboBoxItem>
         </ComboBox>
 
 

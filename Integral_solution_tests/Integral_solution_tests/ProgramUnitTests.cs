@@ -56,14 +56,14 @@ namespace Integral_solution_tests
             
             bool condition =false;
             int a = 1,
-                b = -100,
-                n = 1000;
+                b = -100;
             if (b < a) condition = true;
             Assert.IsTrue(condition);
 
         }
 
         [TestMethod]
+      
         public void calculatorsAreNotTheSame()
         {
             TrapCalculator trapCalculator = new TrapCalculator();

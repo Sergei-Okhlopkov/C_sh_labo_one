@@ -8,7 +8,7 @@ using System.Windows;
 using CalculateLibrary;
 using OxyPlot;
 using OxyPlot.Series;
-
+using System.Windows.Input;
 
 namespace Integral_solution
 {
@@ -22,7 +22,7 @@ namespace Integral_solution
         public MainWindow()
         {
             InitializeComponent();
-            
+
         }
 
 
@@ -31,7 +31,9 @@ namespace Integral_solution
 
         private void GetResult_Click(object sender, RoutedEventArgs e)
         {
+            ClearGraphic();
             Calculate();
+
 
 
         }
@@ -49,28 +51,73 @@ namespace Integral_solution
             {
                 double a = Convert.ToDouble(Li.Text),
                 b = Convert.ToDouble(Hi.Text);
-               
-
                 Stopwatch sw = new Stopwatch();
+                Stopwatch sw2 = new Stopwatch();
+                double time;
 
-                ICalculator calculator = GetCalculator();
-                long n = 100000;
-               
 
-                do
+                switch (cmbChooseWay.SelectedIndex)
                 {
-                    sw.Start();
-                    double result = calculator.Calculate(a, b, n, x => 7 * x - Math.Log(7 * x) + 8);
-                    sw.Stop();
+                    case 0:
+                        {
+                           
 
-                    DrawGraph(n, sw.ElapsedMilliseconds);
-                    tbResult.Text = Convert.ToString(result);
-                    
-                    sw.Reset();
-                    n += 100000;
-                } while (n<=1000000);
+                            ICalculator calculator = GetCalculator();
+                            long n = 100000;
 
-               MyPlot.InvalidatePlot(true);
+                            sw2.Start();
+                            do
+                            {
+                                sw.Start();
+                                double result = calculator.Calculate(a, b, n, x => 7 * x - Math.Log(7 * x) + 8);
+                                sw.Stop();
+
+                                DrawGraph(n, sw.ElapsedMilliseconds);
+                                tbResult.Text = Convert.ToString(result);
+
+                                sw.Reset();
+                                n += 100000;
+                            } while (n <= 1000000);
+                            sw2.Stop();
+                            time = sw.ElapsedMilliseconds/1000;
+                            tbSequentialTime.Text=Convert.ToString(time) + " сек.";
+                            sw2.Reset();
+
+                            MyPlot.InvalidatePlot(true);
+                        }
+                        break;
+                    case 1:
+                        {
+                            this.Cursor = Cursors.Wait;
+
+                            ICalculator calculator = GetCalculator();
+                            long n = 100000;
+
+                            sw2.Start();
+                            do
+                            {
+                                sw.Start();
+                                double result = calculator.CalculateParallel(a, b, n, x => 7 * x - Math.Log(7 * x) + 8);
+                                sw.Stop();
+
+                                DrawGraph(n, sw.ElapsedMilliseconds);
+                                tbResult.Text = Convert.ToString(result);
+                                
+
+                                sw.Reset();
+                                n += 100000;
+                            } while (n <= 1000000);
+                            sw2.Stop();
+                            time = sw2.ElapsedMilliseconds/1000;
+                            tbParallelTime.Text=Convert.ToString(time)+" сек.";
+                            MyPlot.InvalidatePlot(true);
+                            this.Cursor = Cursors.Arrow;
+                        }
+                        break;
+                    default: { } break;
+                }
+
+
             }
         }
 
@@ -78,9 +125,9 @@ namespace Integral_solution
         {
             MainViewModel model = DataContext as MainViewModel;
 
-                DataPoint point = new DataPoint(x,y);
-                model.Points.Add(point);
-            
+            DataPoint point = new DataPoint(x, y);
+            model.Points.Add(point);
+
         }
 
         private void ClearGraphic()
@@ -94,9 +141,10 @@ namespace Integral_solution
         {
             switch (cmbChooseMethod.SelectedIndex)
             {
-                case 0: return new RectangleCalculator(); break;
-                case 1: return new TrapCalculator(); break;
-                default: return new RectangleCalculator(); break;
+                case 0: return new RectangleCalculator(); 
+                case 1: return new TrapCalculator(); 
+                case 2: return new ParabolaCalculator(); 
+                default: return new RectangleCalculator(); 
             }
         }
 
