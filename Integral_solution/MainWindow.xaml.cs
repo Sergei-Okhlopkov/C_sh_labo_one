@@ -37,6 +37,9 @@ namespace Integral_solution
 
 
         }
+        private void CalculateSeq(double a, double b)
+        {
+        }
 
 
 
@@ -51,25 +54,33 @@ namespace Integral_solution
             {
                 double a = Convert.ToDouble(Li.Text),
                 b = Convert.ToDouble(Hi.Text);
+                long n = Convert.ToInt64(tbN.Text);
                 Stopwatch sw = new Stopwatch();
                 Stopwatch sw2 = new Stopwatch();
-                double time;
+                TimeSpan time;
 
 
                 switch (cmbChooseWay.SelectedIndex)
                 {
                     case 0:
                         {
-                           
+                            this.Cursor = Cursors.Wait;
+
 
                             ICalculator calculator = GetCalculator();
-                            long n = 100000;
+                            
 
                             sw2.Start();
+                            double result = calculator.Calculate(a, b, n, x => 7 * x - Math.Log(7 * x) + 8);
+                            sw2.Stop();
+                            
+                            
+
+                            n = 100000;
                             do
                             {
                                 sw.Start();
-                                double result = calculator.Calculate(a, b, n, x => 7 * x - Math.Log(7 * x) + 8);
+                                result = calculator.Calculate(a, b, n, x => 7 * x - Math.Log(7 * x) + 8);
                                 sw.Stop();
 
                                 DrawGraph(n, sw.ElapsedMilliseconds);
@@ -78,12 +89,14 @@ namespace Integral_solution
                                 sw.Reset();
                                 n += 100000;
                             } while (n <= 1000000);
-                            sw2.Stop();
-                            time = sw.ElapsedMilliseconds/1000;
-                            tbSequentialTime.Text=Convert.ToString(time) + " сек.";
-                            sw2.Reset();
+                            
+                            time = sw2.Elapsed;
+                            tbSequentialTime.Text = time.ToString();
+                            
 
                             MyPlot.InvalidatePlot(true);
+                            sw2.Reset();
+                            this.Cursor = Cursors.Arrow;
                         }
                         break;
                     case 1:
@@ -91,26 +104,32 @@ namespace Integral_solution
                             this.Cursor = Cursors.Wait;
 
                             ICalculator calculator = GetCalculator();
-                            long n = 100000;
+                            
 
                             sw2.Start();
+                            double result = calculator.CalculateParallel(a, b, n, x => 7 * x - Math.Log(7 * x) + 8);
+                            sw2.Stop();
+                            
+
+                            n = 100000;
                             do
                             {
                                 sw.Start();
-                                double result = calculator.CalculateParallel(a, b, n, x => 7 * x - Math.Log(7 * x) + 8);
+                                result = calculator.CalculateParallel(a, b, n, x => 7 * x - Math.Log(7 * x) + 8);
                                 sw.Stop();
 
                                 DrawGraph(n, sw.ElapsedMilliseconds);
                                 tbResult.Text = Convert.ToString(result);
-                                
+
 
                                 sw.Reset();
                                 n += 100000;
                             } while (n <= 1000000);
-                            sw2.Stop();
-                            time = sw2.ElapsedMilliseconds/1000;
-                            tbParallelTime.Text=Convert.ToString(time)+" сек.";
+                            
+                            time = sw2.Elapsed;
+                            tbParallelTime.Text = time.ToString();
                             MyPlot.InvalidatePlot(true);
+                            sw2.Reset();
                             this.Cursor = Cursors.Arrow;
                         }
                         break;
@@ -141,10 +160,10 @@ namespace Integral_solution
         {
             switch (cmbChooseMethod.SelectedIndex)
             {
-                case 0: return new RectangleCalculator(); 
-                case 1: return new TrapCalculator(); 
-                case 2: return new ParabolaCalculator(); 
-                default: return new RectangleCalculator(); 
+                case 0: return new RectangleCalculator();
+                case 1: return new TrapCalculator();
+                case 2: return new ParabolaCalculator();
+                default: return new RectangleCalculator();
             }
         }
 

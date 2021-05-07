@@ -39,8 +39,8 @@
         <TextBlock Grid.Row="8" Grid.Column="0" FontWeight="Bold" Foreground="DarkOrange" FontSize="14" TextWrapping="Wrap">Sequential time</TextBlock>
         <TextBlock Grid.Row="9" Grid.Column="0" FontWeight="Bold" Foreground="DarkOrange" FontSize="14" TextWrapping="Wrap">Parallel time</TextBlock>
         <TextBox x:Name="Li" Grid.Row="0" Grid.Column="1" Margin="5 0 0 5 " Text="1" ></TextBox>
-        <TextBox x:Name="Hi" Grid.Row="1" Grid.Column="1" Margin="5 0 0 5 " Text="1000000"></TextBox>
-        <TextBox x:Name="tbN" Grid.Row="2" Grid.Column="1" Margin="5 0 0 5 " Text="100000" ></TextBox>
+        <TextBox x:Name="Hi" Grid.Row="1" Grid.Column="1" Margin="5 0 0 5 " Text="10000000" ></TextBox>
+        <TextBox x:Name="tbN" Grid.Row="2" Grid.Column="1" Margin="5 0 0 5 " Text="50000000" ></TextBox>
         <Button x:Name="GetResult"  Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" Click="GetResult_Click">Рассчитать</Button>
         <Button x:Name="btnClearGraphic" Grid.Row="7" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Click="btnClearGraphic_Click">Очистить график</Button>
         <TextBox x:Name="tbResult" Grid.Row="6" Grid.Column="1" Margin="-30 5 0 5 " Foreground="#FFEE0E0E"  FontWeight="Bold"/>

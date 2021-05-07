@@ -45,15 +45,17 @@ namespace CalculateLibrary
             double h = (b - a) / n;
 
             var sum =new double[n];
+            
 
             Parallel.For(1, n, i =>
             {
-               
+
                 sum[i] = f(a + h * i);
-                
+                                
             });
-            double result = sum.Sum();
-            result += (f(a) + f(b)) / 2;
+            //double result = sum.Sum();
+            //double result = s.Sum();
+            double result = (f(a) + f(b)) / 2 + sum.Sum();
 
             return result * h;
         }
