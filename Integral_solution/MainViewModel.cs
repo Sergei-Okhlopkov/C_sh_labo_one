@@ -13,14 +13,10 @@ namespace Integral_solution
         public MainViewModel()
         {
             this.Title = "Graphic 7x - ln(7x) + 8";
-            this.Points = new ObservableCollection<DataPoint> { };
-                            
+            this.Points = new ObservableCollection<DataPoint> { };              
         }
-
-
+        
         public string Title { get; private set; }
         public ObservableCollection<DataPoint> Points { get; private set; }
-
-
     }
 }
